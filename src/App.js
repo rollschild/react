@@ -11,14 +11,14 @@ class App extends Component {
     ],
   };
 
-  switchNameHandler = () => {
+  switchNameHandler = newName => {
     // This will be ingored by React!
     // this.state.persons[0].name = 'Guangchu';
 
     // merge
     this.setState({
       persons: [
-        {name: 'Guangchu', age: 26},
+        {name: newName, age: 26},
         {name: 'Eva', age: 24},
         {name: 'Jenny', age: 25},
       ],
@@ -29,10 +29,13 @@ class App extends Component {
     return (
       <div className="App">
         <h3>Hey</h3>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <button onClick={this.switchNameHandler.bind(this, 'Guangchu')}>
+          Switch Name
+        </button>
         <Person
           name={this.state.persons[0].name}
-          age={this.state.persons[0].age}>
+          age={this.state.persons[0].age}
+          click={() => this.switchNameHandler('Jobi')}>
           Xi he he..
         </Person>
       </div>
