@@ -11,10 +11,25 @@ class App extends Component {
     ],
   };
 
+  switchNameHandler = () => {
+    // This will be ingored by React!
+    // this.state.persons[0].name = 'Guangchu';
+
+    // merge
+    this.setState({
+      persons: [
+        {name: 'Guangchu', age: 26},
+        {name: 'Eva', age: 24},
+        {name: 'Jenny', age: 25},
+      ],
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <h3>Hey</h3>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age}>
