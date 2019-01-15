@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Radium, {StyleRoot} from 'radium';
 import './App.css';
 import Person from './Person/Person';
 /*
@@ -84,13 +85,18 @@ class App extends Component {
     };
 
     const buttonStyle = {
-      backgroundColor: 'red',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inconsolata',
       padding: '6px',
       margin: '6px auto',
       border: '1px solid blue',
       cursor: 'pointer',
       display: 'block',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      },
     };
 
     let persons = null;
@@ -111,23 +117,43 @@ class App extends Component {
           })}
         </div>
       );
+
+      buttonStyle.backgroundColor = 'red';
+      buttonStyle[':hover'] = {
+        backgroundColor: 'pink',
+        color: 'black',
+      };
     }
 
+    // let classes = ['red', 'bold'].join(' ');
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
     return (
-      <div className="App" style={appStyle}>
-        <h3>Hey</h3>
-        <button style={buttonStyle} onClick={this.showNameHandler}>
-          Show Persons
-        </button>
-        <button
-          onClick={this.switchNameHandler.bind(this, 'Guangchu')}
-          style={buttonStyle}>
-          Switch Name
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App" style={appStyle}>
+          <h3>Hey</h3>
+          <p className={classes.join(' ')}>Let us see some names...</p>
+          <button
+            style={buttonStyle}
+            onClick={this.showNameHandler}
+            key="button">
+            Show Persons
+          </button>
+          <button
+            onClick={this.switchNameHandler.bind(this, 'Guangchu')}
+            style={buttonStyle}>
+            Switch Name
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   };
 }
 
-export default App;
+export default Radium(App);
