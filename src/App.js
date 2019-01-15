@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import styles from './App.css';
 import Person from './Person/Person';
 /*
           <Person
@@ -79,10 +79,7 @@ class App extends Component {
   };
 
   render = () => {
-    const appStyle = {
-      backgroundColor: 'white',
-    };
-
+    /*
     const buttonStyle = {
       backgroundColor: 'green',
       color: 'white',
@@ -93,8 +90,11 @@ class App extends Component {
       cursor: 'pointer',
       display: 'block',
     };
-
+    */
     let persons = null;
+    let btnClass = '';
+
+    console.log(styles.App);
 
     if (this.state.showPersons) {
       persons = (
@@ -113,27 +113,31 @@ class App extends Component {
         </div>
       );
 
-      buttonStyle.backgroundColor = 'red';
+      btnClass = styles.Red; // ALWAYS a string
+      console.log(styles.Red);
     }
 
     // let classes = ['red', 'bold'].join(' ');
     const classes = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      classes.push(styles.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      classes.push(styles.bold);
     }
     return (
-      <div className="App" style={appStyle}>
+      <div className={styles.App}>
         <h3>Hey</h3>
         <p className={classes.join(' ')}>Let us see some names...</p>
-        <button style={buttonStyle} onClick={this.showNameHandler} key="button">
+        <button
+          onClick={this.showNameHandler}
+          key="button"
+          className={btnClass}>
           Show Persons
         </button>
         <button
           onClick={this.switchNameHandler.bind(this, 'Guangchu')}
-          style={buttonStyle}>
+          className={btnClass}>
           Switch Name
         </button>
         {persons}
