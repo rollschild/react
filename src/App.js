@@ -9,6 +9,7 @@ class App extends Component {
       {name: 'Eva', age: 24},
       {name: 'Jenny', age: 25},
     ],
+    showPersons: true,
   };
 
   switchNameHandler = newName => {
@@ -35,7 +36,12 @@ class App extends Component {
     });
   };
 
-  render() {
+  showNameHandler = () => {
+    const showOrNot = this.state.showPersons;
+    this.setState({showPersons: !showOrNot});
+  };
+
+  render = () => {
     const appStyle = {
       backgroundColor: 'white',
     };
@@ -44,28 +50,45 @@ class App extends Component {
       backgroundColor: 'red',
       font: 'inconsolata',
       padding: '6px',
+      margin: 'auto',
       border: '1px solid blue',
       cursor: 'pointer',
+      display: 'block',
     };
 
     return (
       <div className="App" style={appStyle}>
         <h3>Hey</h3>
+        <button style={buttonStyle} onClick={this.showNameHandler}>
+          Show Persons
+        </button>
         <button
           onClick={this.switchNameHandler.bind(this, 'Guangchu')}
           style={buttonStyle}>
           Switch Name
         </button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          click={() => this.switchNameHandler('Jobi')}
-          asTyped={this.inputNameHandler}>
-          Xi he he..
-        </Person>
+        {this.state.showPersons ? (
+          <div>
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age}
+              click={() => this.switchNameHandler('Jobi')}
+              asTyped={this.inputNameHandler}>
+              Xi he he..
+            </Person>
+            <Person
+              name={this.state.persons[1].name}
+              age={this.state.persons[1].age}
+            />
+            <Person
+              name={this.state.persons[2].name}
+              age={this.state.persons[2].age}
+            />
+          </div>
+        ) : null}
       </div>
     );
-  }
+  };
 }
 
 export default App;
