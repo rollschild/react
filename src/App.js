@@ -1,13 +1,29 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
-
+/*
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            click={() => this.switchNameHandler('Jobi')}
+            asTyped={this.inputNameHandler}>
+            Xi he he..
+          </Person>
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+          />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+          />
+*/
 class App extends Component {
   state = {
     persons: [
-      {name: 'Jovi', age: 26},
-      {name: 'Eva', age: 24},
-      {name: 'Jenny', age: 25},
+      {name: 'Jovi', age: 26, id: '000'},
+      {name: 'Eva', age: 24, id: '001'},
+      {name: 'Jenny', age: 25, id: '002'},
     ],
     showPersons: true,
   };
@@ -19,26 +35,47 @@ class App extends Component {
     // merge
     this.setState({
       persons: [
-        {name: newName, age: 26},
-        {name: 'Eva', age: 24},
-        {name: 'Jenny', age: 25},
+        {name: newName, age: 26, id: '000'},
+        {name: 'Eva', age: 24, id: '001'},
+        {name: 'Jenny', age: 25, id: '002'},
       ],
     });
   };
 
-  inputNameHandler = event => {
+  inputNameHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    // const person = this.state.persons[personIndex];
+    /*
+    const person = this.state.persons.find(p => {
+      return p.id === id;
+    });
+    */
+    const newPerson = {
+      ...this.state.persons[personIndex],
+      name: event.target.value,
+    };
+
+    const newPersons = [...this.state.persons];
+    newPersons[personIndex] = newPerson;
+
     this.setState({
-      persons: [
-        {name: event.target.value, age: 26},
-        {name: 'Eva', age: 24},
-        {name: 'Jenny', age: 25},
-      ],
+      persons: newPersons,
     });
   };
 
   showNameHandler = () => {
     const showOrNot = this.state.showPersons;
     this.setState({showPersons: !showOrNot});
+  };
+
+  deletePersonHandler = index => {
+    // const newPersons = this.state.persons.slice();
+    const newPersons = [...this.state.persons];
+    newPersons.splice(index, 1);
+    this.setState({persons: newPersons});
   };
 
   render = () => {
@@ -61,21 +98,17 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={() => this.switchNameHandler('Jobi')}
-            asTyped={this.inputNameHandler}>
-            Xi he he..
-          </Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-          />
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+                key={person.id}
+                changed={event => this.inputNameHandler(event, person.id)}
+              />
+            );
+          })}
         </div>
       );
     }
