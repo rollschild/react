@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Radium, {StyleRoot} from 'radium';
 import './App.css';
 import Person from './Person/Person';
 /*
@@ -92,6 +93,10 @@ class App extends Component {
       border: '1px solid blue',
       cursor: 'pointer',
       display: 'block',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      },
     };
 
     let persons = null;
@@ -114,6 +119,10 @@ class App extends Component {
       );
 
       buttonStyle.backgroundColor = 'red';
+      buttonStyle[':hover'] = {
+        backgroundColor: 'pink',
+        color: 'black',
+      };
     }
 
     // let classes = ['red', 'bold'].join(' ');
@@ -125,21 +134,26 @@ class App extends Component {
       classes.push('bold');
     }
     return (
-      <div className="App" style={appStyle}>
-        <h3>Hey</h3>
-        <p className={classes.join(' ')}>Let us see some names...</p>
-        <button style={buttonStyle} onClick={this.showNameHandler} key="button">
-          Show Persons
-        </button>
-        <button
-          onClick={this.switchNameHandler.bind(this, 'Guangchu')}
-          style={buttonStyle}>
-          Switch Name
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App" style={appStyle}>
+          <h3>Hey</h3>
+          <p className={classes.join(' ')}>Let us see some names...</p>
+          <button
+            style={buttonStyle}
+            onClick={this.showNameHandler}
+            key="button">
+            Show Persons
+          </button>
+          <button
+            onClick={this.switchNameHandler.bind(this, 'Guangchu')}
+            style={buttonStyle}>
+            Switch Name
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   };
 }
 
-export default App;
+export default Radium(App);
