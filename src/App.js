@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styles from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 /*
           <Person
             name={this.state.persons[0].name}
@@ -96,18 +97,21 @@ class App extends Component {
 
     console.log(styles.App);
 
+    // *key* should always be on the outer element
+    // ...in the map() method
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                key={person.id}
-                changed={event => this.inputNameHandler(event, person.id)}
-              />
+              <ErrorBoundary key={person.id}>
+                <Person
+                  name={person.name}
+                  age={person.age}
+                  click={() => this.deletePersonHandler(index)}
+                  changed={event => this.inputNameHandler(event, person.id)}
+                />
+              </ErrorBoundary>
             );
           })}
         </div>
