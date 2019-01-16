@@ -52,8 +52,11 @@ class App extends Component {
 
     // shallow checking
     // only checks pointers
-    // return nextProps.persons !== this.props.persons;
-    return true;
+    return (
+      nextState.persons !== this.state.persons ||
+      nextState.showPersons !== this.state.showPersons
+    );
+    // return true;
     // if returned false, never reach to the render()
     // ...phase, which means the DOM is never updated
   }
@@ -165,6 +168,9 @@ class App extends Component {
 
     return (
       <div className={styles.App}>
+        <button onClick={() => this.setState({showPersons: true})}>
+          Show All Persons
+        </button>
         <Cockpit
           appTitle={this.props.title}
           showPersons={this.state.showPersons}

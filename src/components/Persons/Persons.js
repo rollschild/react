@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Person from './Person/Person';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-class Persons extends Component {
+class Persons extends PureComponent {
   constructor(props) {
     super(props);
     console.log('[Persons.js] Inside constructor', props);
@@ -23,6 +23,7 @@ class Persons extends Component {
     );
   }
 
+  /*
   shouldComponentUpdate(nextProps, nextState) {
     console.log(
       '[Update Persons.js] Inside shouldComponentUpdate',
@@ -32,10 +33,16 @@ class Persons extends Component {
 
     // shallow checking
     // only checks pointers
-    return nextProps.persons !== this.props.persons;
+    return (
+      nextProps.persons !== this.props.persons ||
+      nextProps.changed !== this.props.changed ||
+      nextProps.clicked !== this.props.clicked
+    );
+    // return true;
     // if returned false, never reach to the render()
     // ...phase, which means the DOM is never updated
   }
+  */
 
   componentWillUpdate(nextProps, nextState) {
     console.log(
