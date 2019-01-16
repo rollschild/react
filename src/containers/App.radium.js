@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import styles from './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Radium, {StyleRoot} from 'radium';
+import './App.css';
+import Person from '../components/Persons/Person/Person';
 /*
           <Person
             name={this.state.persons[0].name}
@@ -80,7 +80,10 @@ class App extends Component {
   };
 
   render = () => {
-    /*
+    const appStyle = {
+      backgroundColor: 'white',
+    };
+
     const buttonStyle = {
       backgroundColor: 'green',
       color: 'white',
@@ -90,64 +93,67 @@ class App extends Component {
       border: '1px solid blue',
       cursor: 'pointer',
       display: 'block',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      },
     };
-    */
+
     let persons = null;
-    let btnClass = '';
 
-    console.log(styles.App);
-
-    // *key* should always be on the outer element
-    // ...in the map() method
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <ErrorBoundary key={person.id}>
-                <Person
-                  name={person.name}
-                  age={person.age}
-                  click={() => this.deletePersonHandler(index)}
-                  changed={event => this.inputNameHandler(event, person.id)}
-                />
-              </ErrorBoundary>
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+                key={person.id}
+                changed={event => this.inputNameHandler(event, person.id)}
+              />
             );
           })}
         </div>
       );
 
-      btnClass = styles.Red; // ALWAYS a string
-      console.log(styles.Red);
+      buttonStyle.backgroundColor = 'red';
+      buttonStyle[':hover'] = {
+        backgroundColor: 'pink',
+        color: 'black',
+      };
     }
 
     // let classes = ['red', 'bold'].join(' ');
     const classes = [];
     if (this.state.persons.length <= 2) {
-      classes.push(styles.red);
+      classes.push('red');
     }
     if (this.state.persons.length <= 1) {
-      classes.push(styles.bold);
+      classes.push('bold');
     }
     return (
-      <div className={styles.App}>
-        <h3>Hey</h3>
-        <p className={classes.join(' ')}>Let us see some names...</p>
-        <button
-          onClick={this.showNameHandler}
-          key="button"
-          className={btnClass}>
-          Show Persons
-        </button>
-        <button
-          onClick={this.switchNameHandler.bind(this, 'Guangchu')}
-          className={btnClass}>
-          Switch Name
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App" style={appStyle}>
+          <h3>Hey</h3>
+          <p className={classes.join(' ')}>Let us see some names...</p>
+          <button
+            style={buttonStyle}
+            onClick={this.showNameHandler}
+            key="button">
+            Show Persons
+          </button>
+          <button
+            onClick={this.switchNameHandler.bind(this, 'Guangchu')}
+            style={buttonStyle}>
+            Switch Name
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   };
 }
 
-export default App;
+export default Radium(App);
