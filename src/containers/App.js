@@ -21,6 +21,55 @@ import Cockpit from '../components/Cockpit/Cockpit';
           />
 */
 class App extends Component {
+  constructor(props) {
+    super(props);
+    /*
+    this.state = {
+      persons: [
+        {name: 'Jovi', age: 26, id: '000'},
+        {name: 'Eva', age: 24, id: '001'},
+        {name: 'Jenny', age: 25, id: '002'},
+      ],
+      showPersons: true,
+    };
+    */
+  }
+
+  componentWillMount() {
+    console.log('[App.js] Inside componentWillMount()');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] Inside componentDidMount()');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(
+      '[Update App.js] Inside shouldComponentUpdate()',
+      nextProps,
+      nextState,
+    );
+
+    // shallow checking
+    // only checks pointers
+    // return nextProps.persons !== this.props.persons;
+    return true;
+    // if returned false, never reach to the render()
+    // ...phase, which means the DOM is never updated
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(
+      '[Update App.js] Inside componentWillUpdate()',
+      nextProps,
+      nextState,
+    );
+  }
+
+  componentDidUpdate() {
+    console.log('[Updtate App.js] Inside componentDidUpdate()');
+  }
+
   state = {
     persons: [
       {name: 'Jovi', age: 26, id: '000'},
@@ -81,6 +130,7 @@ class App extends Component {
   };
 
   render = () => {
+    console.log('[App.js] Inside render()');
     /*
     const buttonStyle = {
       backgroundColor: 'green',
