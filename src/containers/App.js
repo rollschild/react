@@ -3,6 +3,8 @@ import styles from './App.css';
 import Persons from '../components/Persons/Persons';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
+
 /*
           <Person
             name={this.state.persons[0].name}
@@ -167,7 +169,7 @@ class App extends Component {
     }
 
     return (
-      <div className={styles.App}>
+      <WithClass styles={styles.App}>
         <button onClick={() => this.setState({showPersons: true})}>
           Show All Persons
         </button>
@@ -179,7 +181,7 @@ class App extends Component {
           switched={this.switchNameHandler}
         />
         {persons}
-      </div>
+      </WithClass>
     );
   };
 }

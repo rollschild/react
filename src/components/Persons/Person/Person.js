@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import classes from './Person.css';
+import styles from './Person.css';
+// import WithClass from '../../../hoc/WithClass';
+import wrapClass, {wrapClassComp} from '../../../hoc/wrapClass';
+import Aux from '../../../hoc/Aux';
 
 class Person extends Component {
   constructor(props) {
@@ -23,7 +26,7 @@ class Person extends Component {
     console.log('[Person.js] Inside render()');
 
     return (
-      <div className={classes.person}>
+      <Aux>
         <p onClick={this.props.click}>
           I'm {this.props.name} and I am {this.props.age} years old.
         </p>
@@ -33,9 +36,10 @@ class Person extends Component {
           onChange={this.props.changed}
           value={this.props.name}
         />
-      </div>
+      </Aux>
     );
   };
 }
 
-export default Person;
+// export default wrapClass(Person, styles.Person);
+export default wrapClassComp(Person, styles.Person);
