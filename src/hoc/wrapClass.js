@@ -11,15 +11,19 @@ const wrapClass = (WrappedComponent, className) => {
 };
 
 const wrapClassComp = (WrappedComponent, className) => {
-  return class extends Component {
+  const WrapperClass = class extends Component {
     render = () => {
       return (
         <div className={className}>
-          <WrappedComponent {...this.props} />
+          <WrappedComponent {...this.props} ref={this.props.forwardedRef} />
         </div>
       );
     };
   };
+
+  return React.forwardRef((props, ref) => {
+    return <WrapperClass {...props} forwardedRef={ref} />;
+  });
 };
 
 export default wrapClass; // it's a function
