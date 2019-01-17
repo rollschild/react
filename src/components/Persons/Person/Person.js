@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import styles from './Person.css';
 // import WithClass from '../../../hoc/WithClass';
 import wrapClass, {wrapClassComp} from '../../../hoc/wrapClass';
@@ -40,6 +41,13 @@ class Person extends Component {
     );
   };
 }
+
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func,
+};
 
 // export default wrapClass(Person, styles.Person);
 export default wrapClassComp(Person, styles.Person);

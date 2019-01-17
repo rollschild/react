@@ -82,6 +82,7 @@ class App extends Component {
       {name: 'Jenny', age: 25, id: '002'},
     ],
     showPersons: true,
+    toggleClickedCounter: 0,
   };
 
   switchNameHandler = newName => {
@@ -122,9 +123,18 @@ class App extends Component {
     });
   };
 
+  /*
+   * IMPORTANT!
+   * setState() is ASYNC
+   */
   showNameHandler = () => {
     const showOrNot = this.state.showPersons;
-    this.setState({showPersons: !showOrNot});
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !showOrNot,
+        toggleClickedCounter: prevState.toggleClickedCounter + 1,
+      };
+    });
   };
 
   deletePersonHandler = index => {
