@@ -38,4 +38,8 @@ const cockpit = props => {
   );
 };
 
-export default cockpit;
+export default React.memo(cockpit);
+/*
+ * React.memo allows cockpit to re-render
+ * only when its received props really changed
+ */
