@@ -22,6 +22,9 @@ import WithClass from '../hoc/WithClass';
             age={this.state.persons[2].age}
           />
 */
+
+export const AuthContext = React.createContext(false);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +59,8 @@ class App extends Component {
     // only checks pointers
     return (
       nextState.persons !== this.state.persons ||
-      nextState.showPersons !== this.state.showPersons
+      nextState.showPersons !== this.state.showPersons ||
+      nextState.authenticated !== this.state.authenticated
     );
     // return true;
     // if returned false, never reach to the render()
@@ -83,6 +87,7 @@ class App extends Component {
     ],
     showPersons: true,
     toggleClickedCounter: 0,
+    authenticated: false,
   };
 
   switchNameHandler = newName => {
@@ -144,6 +149,10 @@ class App extends Component {
     this.setState({persons: newPersons});
   };
 
+  loginHandler = () => {
+    this.setState({authenticated: true});
+  };
+
   render = () => {
     console.log('[App.js] Inside render()');
     /*
@@ -189,8 +198,11 @@ class App extends Component {
           persons={this.state.persons}
           toggled={this.showNameHandler}
           switched={this.switchNameHandler}
+          login={this.loginHandler}
         />
-        {persons}
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
       </WithClass>
     );
   };
